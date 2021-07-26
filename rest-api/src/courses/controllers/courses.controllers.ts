@@ -1,6 +1,6 @@
-import {Body, Controller, Delete, Get, Param, Post, Put, Req, Res} from '@nestjs/common';
-import {CoursesRepository} from '../repositories/courses.repository';
-import {Course} from '../../../../shared/course';
+import { Body, Controller, Delete, Get, HttpException, Param, Post, Put, Req, Res } from '@nestjs/common';
+import { CoursesRepository } from '../repositories/courses.repository';
+import { Course } from '../../../../shared/course';
 
 @Controller('courses')
 export class CoursesControllers {
@@ -17,10 +17,15 @@ export class CoursesControllers {
     return this.coursesDB.findAll();
   }
 
-  @Put('courses/:courseId')
+  @Put(':courseId')
   async updateCourse(
     @Param('courseId') courseId: string,
     @Body() changes: Partial<Course>): Promise<Course> {
+
+    if (changes._id) {
+      throw new HttpException('Can not update course id', 400);
+    }
+
     return this.coursesDB.updateCourse(courseId, changes);
   }
 

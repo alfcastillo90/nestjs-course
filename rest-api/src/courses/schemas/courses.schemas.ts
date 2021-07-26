@@ -1,12 +1,15 @@
 import * as mongoose from 'mongoose';
 
 export const CoursesSchema = new  mongoose.Schema({
-    description: String,
-    longDescription: String,
-    iconUrl: String,
-    category: String,
-    lessonsCount: Number,
-    seqNo: Number,
-    url: String,
-    promo: Boolean,
+  category: String,
+  description: String,
+  iconUrl: String,
+  lessonsCount: Number,
+  longDescription: String,
+  seqNo: {
+    required: true,
+    type: Number,
+  },
+  promo: Boolean,
+  url: String,
 });
