@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpException, Param, Post, Put, Req, Res } from '@nestjs/common';
+import {Body, Controller, Delete, Get, HttpException, Param, Post, Put, Req, Res} from '@nestjs/common';
 import { CoursesRepository } from '../repositories/courses.repository';
 import { Course } from '../../../../shared/course';
 
@@ -20,7 +20,7 @@ export class CoursesControllers {
   @Put(':courseId')
   async updateCourse(
     @Param('courseId') courseId: string,
-    @Body() changes: Partial<Course>): Promise<Course> {
+    @Body() changes: Course): Promise<Course> {
 
     if (changes._id) {
       throw new HttpException('Can not update course id', 400);
@@ -35,7 +35,7 @@ export class CoursesControllers {
   }
 
   @Post('courses')
-  async createCourse(@Body() course: Partial<Course>): Promise<Course> {
+  async createCourse(@Body() course: Course): Promise<Course> {
     return this.coursesDB.addCourse(course);
   }
 }
